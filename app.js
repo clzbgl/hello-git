@@ -3,7 +3,7 @@
   const STORAGE_KEY = 'todo-items-v1';
   const FILTERS = { ALL: 'all', ACTIVE: 'active', COMPLETED: 'completed' };
 
-  /** @typedef {{ id: string, text: string, completed: boolean }} Todo */
+  /** @typedef {{ id: string, text: string, detail: string, completed: boolean }} Todo */
   /** @type {Todo[]} */
   let todos = [];
   /** @type {keyof typeof FILTERS | 'all' | 'active' | 'completed'} */
@@ -12,6 +12,7 @@
   // DOM 引用
   const form = document.getElementById('todo-form');
   const input = document.getElementById('todo-input');
+  const detailInput = document.getElementById('todo-detail-input');
   const list = document.getElementById('todo-list');
   const filtersEl = document.querySelector('.filters');
   const itemsLeftEl = document.getElementById('items-left');
@@ -50,9 +51,26 @@
       checkbox.checked = todo.completed;
       checkbox.setAttribute('aria-label', '标记完成');
 
+      const content = document.createElement('div');
+      content.className = 'todo-content';
       const text = document.createElement('div');
       text.className = 'todo-text';
       text.textContent = todo.text;
+      content.appendChild(text);
+      if (todo.detail) {
+        const detail = document.createElement('div');
+        detail.className = 'todo-detail';
+        detail.textContent = todo.detail;
+        detail.setAttribute('role', 'button');
+        detail.setAttribute('tabindex', '0');
+        detail.setAttribute('aria-expanded', 'false');
+        // 如果包含换行，标记为多行，以便样式在折叠时追加省略提示
+        if (todo.detail.includes('\n')) {
+          detail.dataset.multiline = 'true';
+        }
+        detail.title = '点击展开/收起详情';
+        content.appendChild(detail);
+      }
 
       const removeBtn = document.createElement('button');
       removeBtn.className = 'todo-remove';
@@ -62,7 +80,7 @@
       removeBtn.textContent = '✕';
 
       li.appendChild(checkbox);
-      li.appendChild(text);
+      li.appendChild(content);
       li.appendChild(removeBtn);
       list.appendChild(li);
     }
@@ -79,9 +97,11 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = (input.value || '').trim();
+    const detail = (detailInput.value || '').trim();
     if (!text) return;
-    todos.unshift({ id: generateId(), text, completed: false });
+    todos.unshift({ id: generateId(), text, detail, completed: false });
     input.value = '';
+    if (detailInput) detailInput.value = '';
     save();
     render();
     input.focus();
@@ -99,6 +119,25 @@
       save();
       render();
       return;
+    }
+
+    if (target.classList.contains('todo-detail')) {
+      target.classList.toggle('expanded');
+      const expanded = target.classList.contains('expanded');
+      target.setAttribute('aria-expanded', String(expanded));
+      return;
+    }
+  });
+
+  // 键盘展开/收起
+  list.addEventListener('keydown', (e) => {
+    const t = /** @type {HTMLElement} */(e.target);
+    if (!t.classList || !t.classList.contains('todo-detail')) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      t.classList.toggle('expanded');
+      const expanded = t.classList.contains('expanded');
+      t.setAttribute('aria-expanded', String(expanded));
     }
   });
 

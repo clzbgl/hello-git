@@ -55,6 +55,9 @@ body {
   background: #ffffff;
 }
 
+/* 详情输入跨两列显示 */
+.todo-details-input { grid-column: 1 / -1; min-height: 96px; resize: vertical; }
+
 .todo-input::placeholder { color: var(--muted); }
 
 .btn {
@@ -137,14 +140,18 @@ body {
   width: 18px; height: 18px;
 }
 
-.todo-text {
-  word-break: break-word;
-}
+.todo-content { display: flex; flex-direction: column; }
+.todo-text { word-break: break-word; }
+.todo-detail { color: var(--muted); margin-top: 4px; font-size: 0.92em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.todo-detail.expanded { white-space: pre-wrap; overflow: visible; text-overflow: initial; }
+/* 仅当为多行文本且折叠时，末尾显示提示省略号 */
+.todo-detail:not(.expanded)[data-multiline="true"]::after { content: " …"; color: var(--muted); }
 
 .todo-item.completed .todo-text {
   color: var(--muted);
   text-decoration: line-through;
 }
+.todo-item.completed .todo-detail { color: var(--muted); }
 
 .todo-remove {
   border: none;
