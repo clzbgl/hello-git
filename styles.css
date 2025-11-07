@@ -1,15 +1,15 @@
 /* 基础样式与主题 */
 :root {
-  --bg: #0b0f14;
-  --panel: #121821;
-  --muted: #6b7785;
-  --text: #e8edf2;
+  --bg: #f7fafc; /* 背景为浅色系 */
+  --panel: #ffffff; /* 面板白色 */
+  --muted: #6b7280; /* 灰色文字 */
+  --text: #1f2937; /* 主体深色文字 */
   --primary: #4aa3ff;
   --primary-600: #2b8df2;
   --danger: #ff5b6e;
-  --success: #2ecc71;
-  --border: #1f2732;
-  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --success: #16a34a;
+  --border: #e5e7eb; /* 浅边框 */
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
 * { box-sizing: border-box; }
@@ -18,7 +18,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif;
   color: var(--text);
-  background: radial-gradient(1200px 800px at 10% 10%, #0f1620, var(--bg));
+  background: radial-gradient(1200px 800px at 10% 10%, #ffffff, var(--bg));
 }
 
 .container {
@@ -52,7 +52,7 @@ body {
   border: 1px solid var(--border);
   outline: none;
   color: var(--text);
-  background: #0e141b;
+  background: #ffffff;
 }
 
 .todo-input::placeholder { color: var(--muted); }
@@ -61,7 +61,7 @@ body {
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid var(--border);
-  background: #0e141b;
+  background: #ffffff;
   color: var(--text);
   cursor: pointer;
 }
