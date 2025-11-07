@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>待办清单 · Todo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container" role="main">
+    <h1 class="app-title">待办清单</h1>
+
+    <form id="todo-form" class="todo-form" autocomplete="off">
+      <label class="sr-only" for="todo-input">新的待办事项</label>
+      <input id="todo-input" class="todo-input" type="text" placeholder="添加新的待办事项…" aria-label="新的待办事项" maxlength="200">
+      <button class="btn btn-primary" type="submit" aria-label="添加待办">添加</button>
+    </form>
+
+    <section class="controls" aria-label="列表控制">
+      <div class="filters" role="group" aria-label="过滤">
+        <button class="filter active" data-filter="all" aria-pressed="true">全部</button>
+        <button class="filter" data-filter="active" aria-pressed="false">未完成</button>
+        <button class="filter" data-filter="completed" aria-pressed="false">已完成</button>
+      </div>
+      <div class="meta">
+        <span id="items-left" aria-live="polite">0 项未完成</span>
+        <button id="clear-completed" class="btn btn-ghost" type="button">清除已完成</button>
+      </div>
+    </section>
+
+    <ul id="todo-list" class="todo-list" aria-label="待办列表"></ul>
+
+    <footer class="footer">
+      <p>数据保存在本地浏览器，仅对你可见。</p>
+    </footer>
+  </main>
+
+  <script src="app.js" defer></script>
+  
+</body>
+</html>
+
+
